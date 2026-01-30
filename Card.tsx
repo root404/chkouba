@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardData } from './types';
 import { SuitIcon } from './constants';
-import { Bell, X, Circle } from 'lucide-react';
+import { Bell, Circle } from 'lucide-react';
 
 interface CardProps {
   card: CardData;
@@ -36,7 +36,7 @@ export const Card: React.FC<CardProps> = ({
   const handleClick = (e: React.MouseEvent) => {
     const detail = e.detail;
 
-    // 3 Clicks -> Cross
+    // 3 Clicks -> Toggle Transparency (previously Cross)
     if (detail === 3) {
       onToggleCross(card.id);
       return; // Skip selection toggle for this click
@@ -49,7 +49,6 @@ export const Card: React.FC<CardProps> = ({
     }
     
     // 1 or 2 clicks -> Toggle selection
-    // Note: Standard double-click (2) will toggle selection twice (On->Off->On), effectively keeping state if intended for X logic.
     onToggleSelect(card.id);
   };
 
@@ -60,6 +59,7 @@ export const Card: React.FC<CardProps> = ({
         relative aspect-[3/4] rounded-lg border-2 cursor-pointer transition-all duration-200 select-none
         flex flex-col items-center justify-between p-1 sm:p-2
         ${isShaking ? 'animate-shake ring-4 ring-yellow-400 z-50' : ''}
+        ${isCrossed ? 'opacity-25 grayscale' : 'opacity-100'}
         ${isSelectedByMe ? 'bg-slate-800 border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]' : 'bg-slate-900 border-slate-700'}
         ${isSelectedByPartner && !isSelectedByMe ? 'bg-slate-900 border-green-500 shadow-[0_0_10px_rgba(34,197,94,0.3)]' : ''}
         ${isSelectedByPartner && isSelectedByMe ? 'border-transparent ring-2 ring-blue-500 ring-offset-2 ring-offset-green-500' : ''}
@@ -75,13 +75,6 @@ export const Card: React.FC<CardProps> = ({
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <SuitIcon suit={card.suit} className="w-6 h-6 sm:w-8 sm:h-8 opacity-90" />
       </div>
-
-      {/* Crossed Out Overlay (X) */}
-      {isCrossed && (
-        <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-           <X className="w-10 h-10 sm:w-16 sm:h-16 text-red-600 opacity-90" strokeWidth={3} />
-        </div>
-      )}
 
       {/* Circled Overlay (O) - Yellow */}
       {isCircled && (
