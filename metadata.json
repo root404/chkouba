@@ -1,0 +1,5 @@
+{
+  "name": "Chkobba Signal",
+  "description": "A discrete, real-time signaling tool for Chkobba partners using 40-card logic and color-coded communication.",
+  "requestFramePermissions": []
+}
