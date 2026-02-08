@@ -1,0 +1,5 @@
+{
+  "name": "Chkobba Signal",
+  "description": "A real-time collaborative drawing board for Chkobba partners to signal cards and numbers secretly.",
+  "requestFramePermissions": []
+}
